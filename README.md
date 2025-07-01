@@ -1,8 +1,8 @@
 # Clone Netflix - Projet Étudiant
 
-🎬 Un site de streaming *clone Netflix* réalisé avec **React + TypeScript + Vite** dans le cadre d'un projet étudiant.
+ Un site de streaming *clone Netflix* réalisé avec **React + TypeScript + Vite** dans le cadre d'un projet étudiant.
 
-## 🚀 Fonctionnalités
+## Fonctionnalités
 - Liste de films classés par catégories (Thriller, Fantastique, Drame...)
 - Fiches de films avec détails et vidéos
 - Création de compte et identification utilisateur
@@ -10,12 +10,12 @@
 - Design responsive avec TailwindCSS
 - Déploiement sur Netlify
 
-## ⚠️ Avertissement
+## Avertissement
 Ce site est un **projet étudiant à des fins pédagogiques uniquement**.
 Les vidéos, images et données sont tirées de **Netflix, Allociné et YouTube** dans un but d'apprentissage.
 Aucune vocation commerciale, non affilié à Netflix.
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 npm install
