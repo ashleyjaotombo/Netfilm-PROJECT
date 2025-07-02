@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import type { MovieType } from "../typescript/Movie";
 import { useMovieContext } from "../context/MovieContext";
 import { useAutoplayContext } from "../context/AutoplayContext";
 import { usePlayContext } from "../context/PlayContext";
 import { useNavigate } from "react-router-dom";
+import { useLoginContext } from "../context/LoginContext";
+import { useListContext } from "../context/ListContext";
 
 
 type ContentProps = {
@@ -16,6 +18,38 @@ function ContentDetails({ Content }: ContentProps) {
     const autoplayContext = useAutoplayContext();
     const MoviePlay=usePlayContext();
     const navigate=useNavigate();
+    const LogContext=useLoginContext();
+    const ListContext=useListContext();
+    const [add, setAdd]=useState(false);
+    const [valueofbutton, setValueofbutton] =useState("");
+    
+    useEffect(() => {
+        if (add) {
+            setValueofbutton("✓");
+        } else {
+            setValueofbutton("+");
+        }
+    }, [add]);
+    
+    
+      const handleAddToList = (Content : MovieType) => {
+        if (!ListContext.tabList){
+          const newTab : MovieType[] = [Content];
+          ListContext.setTabList(newTab);
+        }
+        else{
+          const index = ListContext.tabList.findIndex(movie=>movie.id===Content.id);
+    
+          if (index===-1){
+            const updatedList : MovieType[]= [...ListContext.tabList, Content ];
+            ListContext.setTabList(updatedList);
+          }
+        }
+        
+      }
+
+
+
 
   return (
     <div className="fixed right-1/2 translate-x-1/2 w-7/12 h-[730px] top-[50%] translate-y-[-50%] bg-zinc-800 z-50 rounded-xl brightness-100">
@@ -47,12 +81,27 @@ function ContentDetails({ Content }: ContentProps) {
                 >
                     ▶   Lecture
                 </button>
-                <button className="relative text-white h-10 w-10 flex items-center justify-center font-bold rounded-full border-2 p-1 border-zinc-400 text-smwhite hover:border-white"
-                onMouseOver={()=>setMessage(true)}
-                onMouseLeave={()=>setMessage(false)}
-                >
-                        +
-                    {message && (
+            
+                <button
+                  className="relative text-white h-10 w-10 flex items-center justify-center font-bold rounded-full border-2 p-1 border-zinc-400 text-sm hover:border-white"
+                  onMouseOver={() => setMessage(true)}
+                  onMouseLeave={() => setMessage(false)}
+                  onClick={()=>{
+                      console.log(LogContext.loginValue)
+                      if (LogContext.loginValue){
+                        handleAddToList(Content);
+                        setAdd(true);
+                        setTimeout(()=>{
+                          setAdd(false)
+                        }, 1000)
+                      }
+                      else{
+                        navigate("/signup");
+                      }
+                    }}>
+                
+                  {valueofbutton}
+                  {message && (
                         <h5 className="absolute p-1 text-zinc-800 bg-zinc-300 text-sm text-smblack translate-y-[-40px] w-36 rounded-md">
                         Ajouter à Ma liste
                         </h5>
